@@ -61,7 +61,8 @@ is_between <- function(x, a, b) {
 #' rm_na(x)
 #' [1] 1 2 3
 rm_na <- function(x) {
-    return(NULL)
+    clean_x <- x[!is.na(x)]
+    return(clean_x)
 }
 
 #' Calculate the median of each row of a matrix
@@ -80,7 +81,9 @@ rm_na <- function(x) {
 #' [1] 1 4 7
 #' 
 row_medians <- function(x) {
-    return(NULL)
+    # Median values for each row
+    row_medians <- apply(x, MARGIN = 1, FUN = median)
+    return(row_medians)
 }
 
 #' Evaluate each row of a matrix with a provided function
@@ -105,7 +108,12 @@ row_medians <- function(x) {
 #' summarize_rows(m, mean)
 #' [1] 2 5 8
 summarize_rows <- function(x, fn, na.rm=FALSE) {
-    return(NULL)
+    #function that accepts a vector as input and returns a scalar
+    fn_on_row <- function(row) {
+      return(fn(row, na.rm = na.rm))
+    }
+    results <- apply(x, MARGIN = 1, fn_on_row)
+    return(results)
 }
 
 #' Summarize matrix rows into data frame
@@ -154,7 +162,16 @@ sample_normal <- function(n, mean=0, sd=1) {
 }
 
 sample_normal_w_missing <- function(n, mean=0, sd=1, missing_frac=0.1) {
-    return(NULL)
+  # sample without NAs
+  sample<-rnorm(n, mean = mean, sd = sd)
+  # determine number of NAs required
+  missing_n <- ceiling(n * missing_frac)
+  # randomly select indices for NA
+  missing_index <- sample(seq_len(n),size=missing_n)
+  # replace with NA
+  sample[missing_index] <- NA
+
+  return(sample)
 }
 
 simulate_gene_expression <- function(num_samples, num_genes) {
