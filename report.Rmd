@@ -1,6 +1,6 @@
 ---
 title: "Assignment: Base R"
-author: Adam Labadorf
+author: Stephanie Hao
 output: html_document
 ---
 

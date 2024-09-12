@@ -18,7 +18,7 @@
 #' less_than_zero(c(-1,0,1,2,3,4))
 #' [1] TRUE FALSE FALSE FALSE FALSE FALSE
 less_than_zero <- function(x) {
-    return(NULL)
+    return(x<0)
 }
 
 #' Evaluate whether the argument is between two numbers
@@ -44,7 +44,7 @@ less_than_zero <- function(x) {
 #' [2,]  TRUE FALSE FALSE
 #' [3,] FALSE FALSE FALSE
 is_between <- function(x, a, b) {
-    return(NULL)
+    return(x>a & x<b)
 }
 
 #' Return the values of the input vector that are not NA
@@ -150,7 +150,7 @@ summarize_matrix <- function(x, na.rm=FALSE) {
 
 # ------------ Helper Functions Used By Assignment, You May Ignore ------------
 sample_normal <- function(n, mean=0, sd=1) {
-    return(NULL)
+  return(rnorm(n, mean = mean, sd = sd))
 }
 
 sample_normal_w_missing <- function(n, mean=0, sd=1, missing_frac=0.1) {
