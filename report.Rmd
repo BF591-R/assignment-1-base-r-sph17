@@ -102,6 +102,7 @@ a simulated gene expression matrix using the `row_medians()` function.
 ```{r}
 # simulated gene expression dataset
 # NB: simulate_gene_expression is defined in main.R
+set.seed(17)
 gene_exp <- simulate_gene_expression(num_samples=30, num_genes=10)
 row_medians(gene_exp)
 ```
@@ -117,6 +118,7 @@ to accept a matrix and a function in the `summarize_rows()` function.
 
 ```{r}
 # simulated gene expression dataset
+set.seed(17)
 gene_exp <- simulate_gene_expression(num_samples=30, num_genes=10)
 
 # with median, same as above
@@ -161,6 +163,7 @@ matrix and columns in order as follows:
 
 ```{r}
 # simulated gene expression dataset
+set.seed(17)
 gene_exp <- simulate_gene_expression(num_samples=30, num_genes=10)
 
 summary_df <- summarize_matrix(gene_exp)

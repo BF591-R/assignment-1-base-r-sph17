@@ -1,13 +1,13 @@
 # ----------------------- Helper Functions to Implement ------------------------
 
-#' Evaluate whether the argument is less than 2
+#' Evaluate whether the argument is less than 0
 #'
 #' Returns TRUE if the numeric argument x is a prime number, otherwise returns
 #' FALSE
 #'
 #' @param x (numeric): the numeric value(s) to test
 #'
-#' @return logical value or vector indicating whether the numeric argument is less than 2
+#' @return logical value or vector indicating whether the numeric argument is less than 0
 #' @export
 #'
 #' @examples
@@ -152,8 +152,34 @@ summarize_rows <- function(x, fn, na.rm=FALSE) {
 #' 2 -0.01574033 1.026951 -0.04725656 -2.967057 2.571608      112              70      0
 #' 3 -0.09040182 1.027559 -0.02774705 -3.026888 2.353087      130              54      0
 #' 4  0.09518138 1.030461  0.11294781 -3.409049 2.544992       90              72      0
+#' 
+#' set.seed(42)
+#' m <- matrix(rnorm(1000), nrow = 4, byrow = TRUE)
+#' summarize_matrix(m)
+#'    mean     stdev      median       min      max num_lt_0 num_btw_1_and_5 num_na
+#'  1 -0.02039958 0.9754359 -0.03507168 -2.993090 2.701891      132              41      0
+#'  2 -0.03969286 0.9707705 -0.03797064 -2.699930 2.965865      133              34      0
+#'  3 -0.06015963 0.9903508 -0.05018184 -3.017933 3.229069      132              35      0
+#'  4  0.01695436 1.0744280  0.09870923 -3.371739 3.495304      118              43      0
 summarize_matrix <- function(x, na.rm=FALSE) {
-    return(NULL)
+  # Check for numeric matrix
+  if (!is.matrix(x)) {
+    stop("Data must be a numeric matrix!")
+  }  
+  
+  # Summarize each row of the numeric matrix
+  data_summary <- data.frame(
+    mean = apply(x, MARGIN = 1, function(row) mean(row, na.rm = na.rm)),
+    stdev = apply(x, MARGIN = 1, function(row) sd(row, na.rm = na.rm)),
+    median = apply(x, MARGIN = 1, function(row) median(row, na.rm = na.rm)),
+    min = apply(x, MARGIN = 1, function(row) min(row, na.rm = na.rm)),
+    max = apply(x, MARGIN = 1, function(row) max(row, na.rm = na.rm)),
+    num_lt_0 = apply(x, MARGIN = 1, function(row) sum(row < 0, na.rm = na.rm)),
+    num_btw_1_and_5 = apply(x, MARGIN = 1, function(row) sum(row >= 1 & row <= 5, na.rm = na.rm)),
+    num_na = apply(x, MARGIN = 1, function(row) sum(is.na(row)))
+  )
+  
+  return(data_summary)
 }
 
 # ------------ Helper Functions Used By Assignment, You May Ignore ------------
@@ -175,7 +201,10 @@ sample_normal_w_missing <- function(n, mean=0, sd=1, missing_frac=0.1) {
 }
 
 simulate_gene_expression <- function(num_samples, num_genes) {
-    return(NULL)
+  # rows: genes, columns: samples
+  gene_expression <- matrix(
+    rnorm(num_samples * num_genes, mean = 10, sd = 3), nrow = num_genes, ncol = num_samples)  
+  return(gene_expression)
 }
 
 simulate_gene_expression_w_missing <- function(num_samples, num_genes, missing_frac=0.1) {
