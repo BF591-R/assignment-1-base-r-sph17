@@ -374,15 +374,16 @@ and <code>FALSE</code> otherwise. We will test this on a vector of 100
 samples drawn from a normal distribution with mean zero and standard
 deviation of 1.</p>
 <pre class="r"><code># NB: sample_normal is defined in main.R
+set.seed(17)
 x &lt;- sample_normal(10)
 less_than_zero(x)</code></pre>
-<pre><code>##  [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE</code></pre>
 <p>Recall that logical values <code>TRUE</code> and <code>FALSE</code>
 are numerically equal to 1 and 0, respectively. We can therefore perform
 arithmetic operations on them. A quick way to see how many values are
 <code>TRUE</code> in a logical vector by summing it:</p>
 <pre class="r"><code>sum(less_than_zero(x))</code></pre>
-<pre><code>## [1] 4</code></pre>
+<pre><code>## [1] 5</code></pre>
 </div>
 <div id="more-complicated-logical-tests" class="section level2">
 <h2>2. More Complicated Logical Tests</h2>
@@ -395,7 +396,7 @@ than some value <span class="math inline">\(a\)</span> and less than
 <code>TRUE</code> when an element is strictly between values
 <code>a</code> and <code>b</code>, and <code>FALSE</code> otherwise.</p>
 <pre class="r"><code>is_between(x, -1, 1)</code></pre>
-<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE</code></pre>
+<pre><code>##  [1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE</code></pre>
 <p>We can again use the fact that logical vectors are numeric to sanity
 check our code. Recall from above that our vector has 100 samples drawn
 from a normal distribution with mean zero and standard devation 1. From
@@ -408,9 +409,10 @@ can check that similarly to above.</p>
 won’t be exactly 68.2% for any given data set, but if we increase the
 number of samples it should approach this number.</p>
 <pre class="r"><code># now sample 100k times and check to see how many fall within 1 standard deviation of 0
+set.seed(17)
 num_samples &lt;- 100000
 sum(is_between(sample_normal(num_samples), -1, 1))/num_samples</code></pre>
-<pre><code>## [1] 0.68231</code></pre>
+<pre><code>## [1] 0.68187</code></pre>
 </div>
 <div id="missing-values" class="section level2">
 <h2>3. Missing Values</h2>
@@ -424,6 +426,7 @@ dataset that has 10% of its values missing, and use the function
 <code>rm_na(x)</code> to create a new vector that has only the
 non-missing values.</p>
 <pre class="r"><code># NB: sample_normal_w_missing is defined in main.R
+set.seed(17)
 x &lt;- sample_normal_w_missing(1000, missing_frac=0.1)
 
 x_non_missing &lt;- rm_na(x)

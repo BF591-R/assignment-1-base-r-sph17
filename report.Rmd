@@ -23,6 +23,7 @@ mean zero and standard deviation of 1.
 
 ```{r, message=FALSE}
 # NB: sample_normal is defined in main.R
+set.seed(17)
 x <- sample_normal(10)
 less_than_zero(x)
 ```
@@ -63,6 +64,7 @@ it should approach this number.
 
 ```{r}
 # now sample 100k times and check to see how many fall within 1 standard deviation of 0
+set.seed(17)
 num_samples <- 100000
 sum(is_between(sample_normal(num_samples), -1, 1))/num_samples
 ```
@@ -79,6 +81,7 @@ only the non-missing values.
 
 ```{r}
 # NB: sample_normal_w_missing is defined in main.R
+set.seed(17)
 x <- sample_normal_w_missing(1000, missing_frac=0.1)
 
 x_non_missing <- rm_na(x)
