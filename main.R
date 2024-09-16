@@ -179,7 +179,7 @@ summarize_matrix <- function(x, na.rm=FALSE) {
       if (na.rm) {
         row <- row[!is.na(row)]  # Remove NAs first if na.rm = TRUE
       }
-      sum(row >= 1 & row <= 5)
+      sum(row > 1 & row < 5)
     }),
     num_na = apply(x, MARGIN = 1, function(row) {
       if (na.rm) {
