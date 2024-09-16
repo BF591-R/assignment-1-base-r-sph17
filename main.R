@@ -176,7 +176,15 @@ summarize_matrix <- function(x, na.rm=FALSE) {
     max = apply(x, MARGIN = 1, function(row) max(row, na.rm = na.rm)),
     num_lt_0 = apply(x, MARGIN = 1, function(row) sum(row < 0, na.rm = na.rm)),
     num_btw_1_and_5 = apply(x, MARGIN = 1, function(row) sum(row >= 1 & row <= 5, na.rm = na.rm)),
-    num_na = apply(x, MARGIN = 1, function(row) sum(is.na(row)))
+    num_na = apply(x, MARGIN = 1, function(row) {
+      if (na.rm) {
+        # If na.rm is TRUE
+        sum(is.na(row[!is.na(row)]))
+      } else {
+        # If na.rm is FALSE
+        sum(is.na(row))
+      }
+    })
   )
   
   return(data_summary)
@@ -188,13 +196,13 @@ sample_normal <- function(n, mean=0, sd=1) {
 }
 
 sample_normal_w_missing <- function(n, mean=0, sd=1, missing_frac=0.1) {
-  # sample without NAs
+  # Sample without NAs
   sample<-rnorm(n, mean = mean, sd = sd)
-  # determine number of NAs required
+  # Determine number of NAs required
   missing_n <- ceiling(n * missing_frac)
-  # randomly select indices for NA
+  # Randomly select indices for NA
   missing_index <- sample(seq_len(n),size=missing_n)
-  # replace with NA
+  # Replace with NA
   sample[missing_index] <- NA
 
   return(sample)
@@ -209,13 +217,17 @@ simulate_gene_expression <- function(num_samples, num_genes) {
 }
 
 simulate_gene_expression_w_missing <- function(num_samples, num_genes, missing_frac=0.1) {
-  # empty matrix
-  gene_expression <- matrix(NA, nrow = num_genes, ncol = num_samples)
-  
-  # rows: genes, columns: samples
-  gene_expression <- t(apply(gene_expression, 1, function(x) {
-    sample_normal_w_missing(n = num_samples, mean = 10, sd = 3, missing_frac = missing_frac)
-  }))
-  
-  return(gene_expression)  
+    # Use simulate_gene_expression to sample without NAs
+    gene_expression <- simulate_gene_expression(num_samples, num_genes)
+    # Determine number of NAs required
+    total_n <- num_samples * num_genes
+    #print(paste("Total values:", total_n))  # Debug
+    missing_n <- ceiling(total_n * missing_frac)
+    #print(paste("Missing values to introduce:", missing_n)) # Debug
+    # Randomly select indices for NA
+    missing_index <- sample(seq_len(total_n), size = missing_n)
+    # Replace with NA
+    gene_expression[missing_index] <- NA
+    
+    return(gene_expression)
 }

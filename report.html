@@ -376,13 +376,13 @@ deviation of 1.</p>
 <pre class="r"><code># NB: sample_normal is defined in main.R
 x &lt;- sample_normal(10)
 less_than_zero(x)</code></pre>
-<pre><code>##  [1]  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE</code></pre>
+<pre><code>##  [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE</code></pre>
 <p>Recall that logical values <code>TRUE</code> and <code>FALSE</code>
 are numerically equal to 1 and 0, respectively. We can therefore perform
 arithmetic operations on them. A quick way to see how many values are
 <code>TRUE</code> in a logical vector by summing it:</p>
 <pre class="r"><code>sum(less_than_zero(x))</code></pre>
-<pre><code>## [1] 5</code></pre>
+<pre><code>## [1] 4</code></pre>
 </div>
 <div id="more-complicated-logical-tests" class="section level2">
 <h2>2. More Complicated Logical Tests</h2>
@@ -395,7 +395,7 @@ than some value <span class="math inline">\(a\)</span> and less than
 <code>TRUE</code> when an element is strictly between values
 <code>a</code> and <code>b</code>, and <code>FALSE</code> otherwise.</p>
 <pre class="r"><code>is_between(x, -1, 1)</code></pre>
-<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE</code></pre>
 <p>We can again use the fact that logical vectors are numeric to sanity
 check our code. Recall from above that our vector has 100 samples drawn
 from a normal distribution with mean zero and standard devation 1. From
@@ -403,14 +403,14 @@ the theoretical definition of a normal distribution, we would expect
 68.2% of our values to fall within one standard deviation of zero. We
 can check that similarly to above.</p>
 <pre class="r"><code>sum(is_between(x, -1, 1))</code></pre>
-<pre><code>## [1] 9</code></pre>
+<pre><code>## [1] 8</code></pre>
 <p>Due to sampling error the fraction of samples in this range likely
 won’t be exactly 68.2% for any given data set, but if we increase the
 number of samples it should approach this number.</p>
 <pre class="r"><code># now sample 100k times and check to see how many fall within 1 standard deviation of 0
 num_samples &lt;- 100000
 sum(is_between(sample_normal(num_samples), -1, 1))/num_samples</code></pre>
-<pre><code>## [1] 0.68345</code></pre>
+<pre><code>## [1] 0.68231</code></pre>
 </div>
 <div id="missing-values" class="section level2">
 <h2>3. Missing Values</h2>
@@ -872,7 +872,59 @@ NA
 NA
 </td>
 <td style="text-align:right;">
-3
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+4
 </td>
 </tr>
 <tr>
@@ -924,7 +976,7 @@ NA
 NA
 </td>
 <td style="text-align:right;">
-3
+5
 </td>
 </tr>
 <tr>
@@ -950,7 +1002,7 @@ NA
 NA
 </td>
 <td style="text-align:right;">
-3
+2
 </td>
 </tr>
 <tr>
@@ -976,7 +1028,7 @@ NA
 NA
 </td>
 <td style="text-align:right;">
-3
+5
 </td>
 </tr>
 <tr>
@@ -1002,7 +1054,7 @@ NA
 NA
 </td>
 <td style="text-align:right;">
-3
+1
 </td>
 </tr>
 <tr>
@@ -1028,7 +1080,7 @@ NA
 NA
 </td>
 <td style="text-align:right;">
-3
+1
 </td>
 </tr>
 <tr>
@@ -1054,59 +1106,7 @@ NA
 NA
 </td>
 <td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-3
+2
 </td>
 </tr>
 </tbody>
@@ -1151,45 +1151,19 @@ num_na
 <tbody>
 <tr>
 <td style="text-align:right;">
-11.230870
+9.430088
 </td>
 <td style="text-align:right;">
-2.326692
+2.739698
 </td>
 <td style="text-align:right;">
-11.147086
+9.777371
 </td>
 <td style="text-align:right;">
-6.9549739
+4.4598296
 </td>
 <td style="text-align:right;">
-15.14960
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9.951157
-</td>
-<td style="text-align:right;">
-2.837465
-</td>
-<td style="text-align:right;">
-10.571141
-</td>
-<td style="text-align:right;">
-2.7913162
-</td>
-<td style="text-align:right;">
-13.61553
+14.14527
 </td>
 <td style="text-align:right;">
 0
@@ -1198,151 +1172,99 @@ num_na
 2
 </td>
 <td style="text-align:right;">
-3
+0
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-9.068267
+9.427314
 </td>
 <td style="text-align:right;">
-3.553491
+3.232963
 </td>
 <td style="text-align:right;">
-10.059060
+9.005439
 </td>
 <td style="text-align:right;">
-0.0390434
+4.6227466
 </td>
 <td style="text-align:right;">
-15.46336
+17.32698
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-4
+3
 </td>
 <td style="text-align:right;">
-3
+0
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-9.878232
+10.046319
 </td>
 <td style="text-align:right;">
-3.179250
+3.170009
 </td>
 <td style="text-align:right;">
-9.561294
+9.462056
 </td>
 <td style="text-align:right;">
-5.7922189
+2.6356823
 </td>
 <td style="text-align:right;">
-16.70722
-</td>
-<td style="text-align:right;">
-0
+15.54038
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-3
+1
+</td>
+<td style="text-align:right;">
+0
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-10.057702
+9.829500
 </td>
 <td style="text-align:right;">
-3.693826
+4.696775
 </td>
 <td style="text-align:right;">
-10.191576
+9.991999
 </td>
 <td style="text-align:right;">
-3.4026938
+-0.6684094
 </td>
 <td style="text-align:right;">
-18.74822
+17.17965
+</td>
+<td style="text-align:right;">
+2
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
+0
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-10.524060
+9.948305
 </td>
 <td style="text-align:right;">
-2.425547
+3.429673
 </td>
 <td style="text-align:right;">
-10.479311
+8.916784
 </td>
 <td style="text-align:right;">
-6.3663982
-</td>
-<td style="text-align:right;">
-15.30907
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10.533403
-</td>
-<td style="text-align:right;">
-2.608902
-</td>
-<td style="text-align:right;">
-11.176507
-</td>
-<td style="text-align:right;">
-5.5724307
-</td>
-<td style="text-align:right;">
-15.41639
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9.842878
-</td>
-<td style="text-align:right;">
-3.405433
-</td>
-<td style="text-align:right;">
-9.087661
-</td>
-<td style="text-align:right;">
-4.8727133
+5.1657950
 </td>
 <td style="text-align:right;">
 17.13857
@@ -1351,27 +1273,53 @@ num_na
 0
 </td>
 <td style="text-align:right;">
-2
+0
 </td>
 <td style="text-align:right;">
-3
+0
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-10.744910
+10.945886
 </td>
 <td style="text-align:right;">
-2.895068
+2.523291
 </td>
 <td style="text-align:right;">
-11.327637
+11.091301
 </td>
 <td style="text-align:right;">
-3.2371762
+3.9731320
 </td>
 <td style="text-align:right;">
-16.97709
+15.13068
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9.638088
+</td>
+<td style="text-align:right;">
+3.612760
+</td>
+<td style="text-align:right;">
+8.969564
+</td>
+<td style="text-align:right;">
+2.6989484
+</td>
+<td style="text-align:right;">
+15.51507
 </td>
 <td style="text-align:right;">
 0
@@ -1380,24 +1328,50 @@ num_na
 2
 </td>
 <td style="text-align:right;">
-3
+0
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-10.966230
+10.326935
 </td>
 <td style="text-align:right;">
-2.396751
+2.212592
 </td>
 <td style="text-align:right;">
-11.027099
+10.363122
 </td>
 <td style="text-align:right;">
-5.3723881
+4.4846270
 </td>
 <td style="text-align:right;">
-15.90824
+15.14960
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10.994173
+</td>
+<td style="text-align:right;">
+2.681972
+</td>
+<td style="text-align:right;">
+10.765711
+</td>
+<td style="text-align:right;">
+6.1675645
+</td>
+<td style="text-align:right;">
+16.21172
 </td>
 <td style="text-align:right;">
 0
@@ -1406,7 +1380,33 @@ num_na
 0
 </td>
 <td style="text-align:right;">
-3
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9.352914
+</td>
+<td style="text-align:right;">
+3.010251
+</td>
+<td style="text-align:right;">
+9.432168
+</td>
+<td style="text-align:right;">
+3.4026938
+</td>
+<td style="text-align:right;">
+16.57231
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
 </td>
 </tr>
 </tbody>
