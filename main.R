@@ -201,12 +201,28 @@ sample_normal_w_missing <- function(n, mean=0, sd=1, missing_frac=0.1) {
 }
 
 simulate_gene_expression <- function(num_samples, num_genes) {
-  # rows: genes, columns: samples
+  
   gene_expression <- matrix(
     rnorm(num_samples * num_genes, mean = 10, sd = 3), nrow = num_genes, ncol = num_samples)  
+  
+  # empty matrix
+  gene_expression <- matrix(NA, nrow = num_genes, ncol = num_samples)
+  
+  # rows: genes, columns: samples
+  gene_expression <- t(apply(gene_expression, MARGIN = 1, function(x) sample_normal(num_samples, mean = mean, sd = sd)))
+  
   return(gene_expression)
+
 }
 
 simulate_gene_expression_w_missing <- function(num_samples, num_genes, missing_frac=0.1) {
-    return(NULL)
+  # empty matrix
+  gene_expression <- matrix(NA, nrow = num_genes, ncol = num_samples)
+  
+  # rows: genes, columns: samples
+  gene_expression <- t(apply(gene_expression, 1, function(x) {
+    sample_normal_w_missing(n = num_samples, mean = 10, sd = 3, missing_frac = missing_frac)
+  }))
+  
+  return(gene_expression)  
 }
