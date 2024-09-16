@@ -184,6 +184,7 @@ the value `NA`.
 ```{r}
 # simulated gene expression dataset
 # NB: simulate_gene_expression_s_missing is defined in main.R
+set.seed(17)
 gene_exp <- simulate_gene_expression_w_missing(num_samples=30, num_genes=10, missing_frac=0.1)
 
 summary_df <- summarize_matrix(gene_exp)
