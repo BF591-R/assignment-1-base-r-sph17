@@ -175,7 +175,12 @@ summarize_matrix <- function(x, na.rm=FALSE) {
     min = apply(x, MARGIN = 1, function(row) min(row, na.rm = na.rm)),
     max = apply(x, MARGIN = 1, function(row) max(row, na.rm = na.rm)),
     num_lt_0 = apply(x, MARGIN = 1, function(row) sum(row < 0, na.rm = na.rm)),
-    num_btw_1_and_5 = apply(x, MARGIN = 1, function(row) sum(row >= 1 & row <= 5, na.rm = na.rm)),
+    num_btw_1_and_5 = apply(x, MARGIN = 1, function(row){
+      if (na.rm) {
+        row <- row[!is.na(row)]  # Remove NAs first if na.rm = TRUE
+      }
+      sum(row >= 1 & row <= 5)
+    }),
     num_na = apply(x, MARGIN = 1, function(row) {
       if (na.rm) {
         # If na.rm is TRUE
